@@ -19,18 +19,19 @@ Depending on the version you are building, you will require:
 		
 * Dump file of Hybris database that **must be called** hybrisDB.dmp
 
-NB: the rpm (or rpm.zip) must be placed under 18.4.0/ or 11.2.0.2/ folders.
-NB2: the hybrisDB.dmp must be placed under 18.4.0/customScripts/ or 11.2.0.2/customScripts folders.
+**NB:** the rpm (or rpm.zip) must be placed under **18.4.0/** or **11.2.0.2/** folders.
+
+**NB2:** the hybrisDB.dmp must be placed under **18.4.0/customScripts/** or **11.2.0.2/customScripts** folders.
 
 # Build the container
 For 11g execute the following command:
-```
+```bash
 cd ${REPO_PATH}/OracleDatabase\SingleInstance\dockerfiles
 ./buildDockerImage.sh -x -v 11.2.0.2 -i -o "--memory=1g --memory-swap=2g"
 ```
 
 For 18c execute the following command:
-```
+```bash
 cd ${REPO_PATH}/OracleDatabase\SingleInstance\dockerfiles
 ./buildDockerImage.sh -x -v 18.4.0 -i -o "--memory=1g --memory-swap=2g"
 ```
@@ -39,13 +40,13 @@ Once you have built it, identify a folder on your host system where to store the
 
 Running a 11g container:
 
-```
+```bash
 docker run --name oracle-xe -p 1521:1521 -p 5500:5500 -e ORACLE_PWD=oracle -v ${REPO_PATH}\OracleDatabase\SingleInstance\dockerfiles\11.2.0.2\customScripts:/u01/app/oracle/scripts/setup --shm-size="2g"  oracle/database:11.2.0.2-xe
 ```
 
 Running a 18c container:
 
-```
+```bash
 docker run --name oracle-xe-18c -p 1521:1521 -p 5500:5500 -e ORACLE_SID=XE -e ORACLE_PWD=oracle -v ~/Development/database:/opt/oracle/oradata -v ${REPO_PATH}/OracleDatabase/SingleInstance/dockerfiles/18.4.0/customScripts:/docker-entrypoint-initdb.d/setup --shm-size="2g" oracle/database:18.4.0-xe
 ```
 
@@ -117,7 +118,7 @@ Put the following json file under your ${HYBRIS_DIR}/bin/platform and name it *s
 }
 ```
 And perform a full system update via ant command
-```
+```bash
 cd ${HYBRIS_DIR}/bin/platform
 . ./setantenv.sh
 ant updatesystem -DconfigFile=systemupdate.json
@@ -125,3 +126,17 @@ ant updatesystem -DconfigFile=systemupdate.json
 
 # Hint
 To start the container in detached mode and auto start it when the OS starts, add the following parameters: *--restart always --detach* just after the aforementioned *-p argument*
+
+# SQL CLI
+For accessing via sqlplus, you can use the following commands:
+
+* Attach the container with the following command
+```bash
+docker exec -it <container_id> /bin/bash
+```
+* Execute one of the following commands
+```bash
+sqlplus sys/<your password>@//localhost:1521/<your SID> as sysdba
+sqlplus system/<your password>@//localhost:1521/<your SID>
+sqlplus pdbadmin/<your password>@//localhost:1521/<Your PDB name>
+```
