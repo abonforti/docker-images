@@ -19,6 +19,9 @@ Depending on the version you are building, you will require:
 		
 * Dump file of Hybris database that **must be called** hybrisDB.dmp
 
+NB: the rpm (or rpm.zip) must be placed under 18.4.0/ or 11.2.0.2/ folders.
+NB2: the hybrisDB.dmp must be placed under 18.4.0/customScripts/ or 11.2.0.2/customScripts folders.
+
 # Build the container
 For 11g execute the following command:
 ```
