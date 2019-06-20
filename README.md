@@ -1,11 +1,11 @@
-### How to configure Oracle XE
+# How to configure Oracle XE
 
 Following this instructions you will be able to configure Oracle Database XE (Express Edition) supporting the following versions:
 
  - 11.2.0.2
  - 18.4.0
 
-# Files Needed
+## Files Needed
 
 Depending on the version you are building, you will require:
 
@@ -23,7 +23,7 @@ Depending on the version you are building, you will require:
 
 **NB2:** the hybrisDB.dmp must be placed under **18.4.0/customScripts/** or **11.2.0.2/customScripts** folders.
 
-# Build the container
+## Build the container
 For 11g execute the following command:
 ```bash
 cd ${REPO_PATH}/OracleDatabase\SingleInstance\dockerfiles
@@ -38,17 +38,19 @@ cd ${REPO_PATH}/OracleDatabase\SingleInstance\dockerfiles
 
 Once you have built it, identify a folder on your host system where to store the persisted database (e.g. it will not be recreated at the next container restart, in this example, it's supposed to be ~/Development/database)
 
+## Run a container
+
 Running a 11g container:
 
 ```bash
 docker run --name oracle-xe -p 1521:1521 -p 5500:5500 -e ORACLE_PWD=oracle -v ${REPO_PATH}\OracleDatabase\SingleInstance\dockerfiles\11.2.0.2\customScripts:/u01/app/oracle/scripts/setup --shm-size="2g"  oracle/database:11.2.0.2-xe
 ```
-
 Running a 18c container:
 
 ```bash
 docker run --name oracle-xe-18c -p 1521:1521 -p 5500:5500 -e ORACLE_SID=XE -e ORACLE_PWD=oracle -v ~/Development/database:/opt/oracle/oradata -v ${REPO_PATH}/OracleDatabase/SingleInstance/dockerfiles/18.4.0/customScripts:/docker-entrypoint-initdb.d/setup --shm-size="2g" oracle/database:18.4.0-xe
 ```
+## Configure hybris
 
 Finally, connect hybris using the following properties:
 ```
