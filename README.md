@@ -14,6 +14,7 @@ Depending on the version you are building, you will require:
 		SHA256: 308c044444342b9a3a8d332c68b12c540edf933dc8162d8eda3225e662433f1b
 
 *   oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+
 		SHA256: b5039fad2e4f92c68778dcabbd0b4622a6cb025f25f7d6222f9e9de53ebab531
 		
 * Dump file of Hybris database that **must be called** hybrisDB.dmp
